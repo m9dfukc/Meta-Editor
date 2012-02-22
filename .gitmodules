@@ -1,0 +1,12 @@
+[submodule "Resources/steal"]
+	path = Resources/steal
+	url = https://github.com/jupiterjs/steal.git
+[submodule "Resources/jquery"]
+	path = Resources/jquery
+	url = https://github.com/jupiterjs/jquerymx.git
+[submodule "Resources/documentjs"]
+	path = Resources/documentjs
+	url = https://github.com/jupiterjs/documentjs.git
+[submodule "Resources/funcunit"]
+	path = Resources/funcunit
+	url = https://github.com/jupiterjs/funcunit.git

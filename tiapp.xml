@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <sdk-version>1.1.0</sdk-version>
+    <guid>ed8e0c0c-179c-4bf1-aeeb-e7ebe9c35a06</guid>
+    <!-- These values are edited/maintained by Titanium Developer -->
+    <id>de.m9dfukc.metaeditor</id>
+    <name>metaeditor</name>
+    <version>1.0</version>
+    <publisher>admin</publisher>
+    <url>http://</url>
+    <description>not specified</description>
+    <icon>default_app_logo.png</icon>
+    <copyright>2012 by admin</copyright>
+    <!-- Window Definition - these values can be edited -->
+    <window>
+        <id>initial</id>
+        <title>DeskTest</title>
+        <url>app://index.html</url>
+        <width>740</width>
+        <max-width>740</max-width>
+        <min-width>740</min-width>
+        <height>500</height>
+        <max-height>3000</max-height>
+        <min-height>0</min-height>
+        <fullscreen>false</fullscreen>
+        <resizable>true</resizable>
+        <chrome scrollbars="true">true</chrome>
+        <maximizable>false</maximizable>
+        <minimizable>true</minimizable>
+        <closeable>true</closeable>
+    </window>
+</ti:app>

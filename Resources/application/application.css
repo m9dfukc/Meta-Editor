@@ -1,0 +1,13 @@
+body {
+	font-family:Lucida Sans,Lucida Grande,Arial,sans-serif;
+	margin:20px;
+	line-height:22px;
+	width:740px;
+}
+.container {
+  font-family: sans-serif;
+  width: 700px;
+}
+#controls, #editor, #pages {
+  width: 100%;
+}

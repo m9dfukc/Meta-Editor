@@ -1,0 +1,10 @@
+#editable {
+  width: 100%;
+  height: 400px;
+  /*height: 1000px;*/
+  border:1px solid black;
+  text-align: left;
+  padding: 15px 10px;
+  font-size: 12px;
+  -webkit-user-select: text;
+}
