@@ -4,6 +4,7 @@ steal(
 	'widgets/controls',
 	'ui/events/events.js',
 	'ui/menus/context.js',
+	'ui/menus/window.js',
 	'./scripts/rangy-core.js',
 	'./scripts/rangy-functions.js',		
 	'./application.css', 
@@ -17,12 +18,12 @@ steal(
 			var timestamp = (new Date()).getTime();
 			document.execCommand(
 				"InsertHTML", 
-				false, 
+				true, 
 				'<span date-time="'+timestamp+'" class="'+_class+'">'+character+'</span>'
 			);
 		};
 		
-	    $('#editable').keydown(function(event) {
+	    $('#editable').keypress(function(event) {
 	    	if( event.ctrlKey && String.fromCharCode( event.which ).toLowerCase() == 'v' ||
 	    		event.which == 224 && String.fromCharCode( event.which ).toLowerCase() == 'v') {
 	    		return;
@@ -47,6 +48,7 @@ steal(
 	    	}
 	    	
 	    	insertCharacter("","char");
+	    	//return false;
 	    });
 	    
 	   	

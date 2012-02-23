@@ -1,12 +1,12 @@
 body {
 	font-family:Lucida Sans,Lucida Grande,Arial,sans-serif;
 	margin:20px;
-	line-height:22px;
-	width:740px;
+	line-height:20px;
+	background-color: #FAFAFA;
 }
 .container {
-  font-family: sans-serif;
-  width: 700px;
+	font-family: sans-serif;
+	width: 700px;
 }
 .tab {
 	padding-left: 20px;
@@ -15,5 +15,5 @@ body {
 	padding-left: 5px;
 }
 #controls, #editor, #pages {
-  width: 100%;
+	width: 100%;
 }

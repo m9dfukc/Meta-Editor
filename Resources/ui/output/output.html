@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Preview Print Document</title>
+        <style type='text/css'>
+            body { font-family:Lucida Sans,Lucida Grande,Arial,sans-serif; padding: 10px; background-color: #FFFFFF; }
+            #output { 
+            	font-family: Arial, Helvetica;
+            	width: 700px;
+				height: 1000px;
+				border:1px solid black;
+				text-align: left;
+				padding: 15px 10px;
+				margin: 0;
+				font-size: 12px;
+				line-height: 17px;
+				padding: 30px 10px 20px 10px;
+            	zoom: 50%;
+            }
+        </style>
+	</head>
+	<body>
+		<div id='output'></div>
+		<script type='text/javascript' 
+                src='../../steal/steal.js'>
+        </script>
+		<script type='text/javascript'>
+			steal('ui/output',function(){
+				$('#output').ui_output();
+			})
+		</script>
+	</body>
+</html>
