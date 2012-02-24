@@ -1,6 +1,5 @@
 steal(
 	'jquery',
-	'ui/events/events.js',
 	function($){
 		var menu = Titanium.UI.createMenu();
 	    menu.addItem('Cut', function() {

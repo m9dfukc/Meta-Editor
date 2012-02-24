@@ -17,3 +17,9 @@ body {
 #controls, #editor, #pages {
 	width: 100%;
 }
+#metainformation {
+	position: absolute;
+	top: 140px;
+	left: 180px;
+	/*display: none;*/
+}

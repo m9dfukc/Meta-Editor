@@ -5,7 +5,7 @@ steal(
 		/**
 		 * @class Ui.Output
 		 */
-		$.Controller('Ui.Output',
+		$.Controller('Application.Output',
 		/** @Static */
 		{
 			defaults : {}

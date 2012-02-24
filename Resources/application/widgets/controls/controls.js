@@ -2,9 +2,9 @@ steal(
 	'jquery',
 	'jquery/controller',
 	'jquery/view/ejs',
-	'./controls.css',
-	'./scripts/jquery.timeago.js',
-	'./scripts/jquery.timeago.functions.js' 
+	'application/scripts/jquery.timeago.js',
+	'application/scripts/jquery.timeago.functions.js',
+	'./controls.css'	
 ).then( './views/init.ejs', function($){
 	
 	/**
@@ -18,7 +18,7 @@ steal(
 	/** @Prototype */
 	{
 		init : function(){
-			this.element.html("//widgets/controls/views/init.ejs",{
+			this.element.html("//application/widgets/controls/views/init.ejs",{
 				message: "Hello World"
 			});
 		}

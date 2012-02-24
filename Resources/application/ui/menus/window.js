@@ -1,6 +1,5 @@
 steal(
 	'jquery',
-	'ui/events/events.js',
 	function($){
 		var menu = Titanium.UI.createMenu();
 		var fileItem = menu.addItem("File");
@@ -17,30 +16,22 @@ steal(
 		});
 		
 		fileItem.addItem("Open File", function(e) {
-		    var props = {multiple:false,directories:false,files:true,types:['gif','png','jpg']};
-		    Titanium.UI.openFileChooserDialog(function(f)
-		    {
-		        if (f.length)
-		        {
-		            alert(f[0]);
-		        }
-		    },
-		    props);
+		    if (DocModel != null) DocModel.open();
 		});
 		
 		fileItem.addItem("Save", function(e) {
-		    alert("save!");
-		});
+		    if (DocModel != null) DocModel.save();
+		}); 
 		
 		fileItem.addItem("Save As ...", function(e) {
-		    alert("save!");
+			if (DocModel != null) DocModel.saveAs();
 		});
 		
 		fileItem.addSeparatorItem();
 		
 		fileItem.addItem("Print", function(e) {
 		    var currentWindow = Titanium.UI.getCurrentWindow();  
-		    var newWindow = currentWindow.createWindow('app://ui/output/output.html');  
+		    var newWindow = currentWindow.createWindow('app://application/output/output.html');  
 		    newWindow.setWidth(415);  
 		    newWindow.setHeight(620);
 		    newWindow.open();  
@@ -54,5 +45,6 @@ steal(
 		});
 		
 		Titanium.UI.setMenu(menu);
+		
 	}
 );
