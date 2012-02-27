@@ -22,8 +22,8 @@ steal(
 		
 		$('#controls').widgets_controls();
 		$('#editor').widgets_tinyeditor();
-		//$('#metainformation').widgets_metainformation();
-		//$('#metainformation').widgets_metainformation().trigger('show');
+		$('#metainformation').widgets_metainformation();
+		$('#metainformation').widgets_metainformation().trigger('show');
 		
 		$('#test').mouseup(function() {
             //reportSelectionHtml();

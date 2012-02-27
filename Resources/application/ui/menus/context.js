@@ -11,6 +11,6 @@ steal(
 	    menu.addItem('Paste', function() {
 	        $('#editable').ui_events().trigger("paste");
 	    });
-	    Titanium.UI.getMainWindow().setContextMenu(menu);
+	    //Titanium.UI.getMainWindow().setContextMenu(menu);
 	}
 );

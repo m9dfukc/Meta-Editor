@@ -1,5 +1,8 @@
 steal( 
 	'jquery/class', 
+	'jquery/view/view.js',
+	'jquery/view/ejs/ejs.js',
+	'application/scripts/tiny_mce/jquery.tinymce.js', 
 	function($){
 		$.Class('Model.Document',
 		{
@@ -13,26 +16,42 @@ steal(
 				this.file = "";
 				
 				$(this.element).find('#controls')
-					.attr('owner', this.owner)
-					.attr('location', this.location)
-					.attr('date', this.date);
+					.attr('data-owner', this.owner)
+					.attr('data-location', this.location)
+					.attr('datetime', this.date);
 				    	
 			},
 			retrieveData: function(){
-				return this.element.html();
+				
+				var data = tinyMCE.activeEditor.getContent();
+				var meta = this.element.find("#controls");
+				var trash = this.element.find("#trash");
+				var out = $.View('//application/views/file.ejs',{
+					"filedata" : data,
+					"owner" : $(meta).attr("data-owner"),
+					"location" : $(meta).attr("data-location")
+				});
+				return out;
 			},
 			setOwner: function(str) {
 				this.owner = str;
-				$(this.element).find('#controls').attr('owner', this.owner);
+				$(this.element).find('#controls').attr('data-owner', this.owner);
 			},
 			setLocation: function(str) {
 				this.location = str;
-				$(this.element).find('#controls').attr('location', this.location);
+				$(this.element).find('#controls').attr('data-location', this.location);
+			},
+			setDate: function(str) {
+				this.date = str;
+			},
+			setTrash: function(str) {
+				$("#trash").html(str);
 			},
 			save: function() {
 			    if (this.file != "") {
 			    	var file = Titanium.Filesystem.getFile(this.file);
 					file.write(this.retrieveData());
+					alert("Document saved to file!");
 			    } else {
 			    	this.saveAs();	
 			    }
@@ -71,7 +90,17 @@ steal(
 			            var file = Titanium.Filesystem.getFile(fileSelected);
 			            if (file.exists()) {
 			            	var tmp = file.read().toString();
-			            	_this.element.html(tmp);
+			            	var owner = $(tmp).closest("meta[name='author']").text();
+			            	var location = $(tmp).closest("meta[name='author-location']").text();
+			            	var filedata = $(tmp).closest("#filedata").html();
+			            	var trash = $(tmp).closest("#trash").html();
+			            	
+			            	_this.setOwner(owner);
+			            	_this.setLocation(location);
+			            	_this.setTrash(trash);
+			            	_this.file = file;
+			            	
+			            	tinyMCE.activeEditor.setContent(filedata);
 			            	$('#metainformation').trigger('hide');
 			            }
 			        }

@@ -16,7 +16,7 @@
             	padding: 30px 25px 25px 25px;
             	margin: 0;	
             	width: 700px;
-				height: 1000px;			
+				height: 100%;			
             	/*zoom: 50%;*/
             }
             canvas {
@@ -24,12 +24,15 @@
             	top: 0;
             	left: 0; 
             	width: 700px;
-				height: 1000px;	           	
+				height: 100%;	           	
             }
         </style>
 	</head>
 	<body>
-		<div id="output"></div>
+		<div id="output">
+			<div id="filedata"></div>
+			<div id="trash"></div>
+		</div>
 		<input type="button" id="print" value="print" />
 		<script type='text/javascript' 
                 src='../../steal/steal.js'>

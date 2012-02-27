@@ -3,6 +3,7 @@ steal(
 	'jquery/controller',
 	'jquery/view/ejs',
 	'application/scripts/tiny_mce/jquery.tinymce.js',
+	'application/scripts/jquery.create.js',
 	'./tinyeditor.css'
 ).then( './views/init.ejs', function($){
 
@@ -33,8 +34,10 @@ steal(
 	                    $(ed.getDoc())
 	                    .bind('dragstart', function(l){
 	                        ed.dragStart = true;
+	                        console.log("dstart");
 	                    })
 	                    .bind('drop', function(l) {
+	                    	console.log("drop");
 	                        if (ed.dragStart === false) {
 	                            l.preventDefault();
 	                            l.stopPropagation();
@@ -127,7 +130,14 @@ steal(
 							return false;
 						}
 	               	});
+	               	
+	               	ed.onPaste.add(function(ed, e) {
+           				console.debug('Pasted plain text');
+      				});
+	            	   	
 				},
+				
+				
 				// Location of TinyMCE script
 				script_url : '/application/scripts/tiny_mce/tiny_mce.js',
 				content_css : '/application/widgets/tinyeditor/tiny_mce.css',
@@ -138,14 +148,14 @@ steal(
 				mode : 'specific_textareas',
 				
 				// Theme options
-				theme_advanced_buttons1 : "save,newdocument,print,|,bold,italic,underline,|,cut,copy,paste,|,undo,redo",
+				theme_advanced_buttons1 : "newdocument,save,print,|,bold,italic,underline,|,cut,copy,paste,|,undo,redo",
 				theme_advanced_buttons2 : "",
 				theme_advanced_buttons3 : "",
 				theme_advanced_buttons4 : "",
 				theme_advanced_toolbar_location : "top",
 				theme_advanced_toolbar_align : "left",
 				theme_advanced_statusbar_location : "",
-				theme_advanced_resizing : false,
+				theme_advanced_resizing : true,
 	
 	            valid_elements : "span[datetime|data-owner|data-location|class],br",
 	            valid_children: "body[span|br],-span[span]",
@@ -170,9 +180,15 @@ steal(
 	            paste_text_linebreaktype : "br",
 	            paste_strip_class_attributes : "mso",
 	            paste_postprocess  : function(pl, o) {
-	                var strhtml = o.node.innerHTML;
-	                if ($(strhtml).filter("span[datetime][data-owner][data-location]").length == 0) {
-	                    var timestamp = (new Date()).getTime();
+		            var strhtml = o.node.innerHTML;
+		            try {
+		            	var el = $(strhtml);
+		            }  catch(e) {
+						var el = $("<div/>");
+					}
+		            console.log(el);
+					if ($(el).closest("span[datetime][data-owner]").length == 0) {
+		            	var timestamp = (new Date()).getTime();
 	                    var strtxt = o.node.textContent;
 	                    strhtml = "";
 	                    for(i=0;i<strtxt.length;i++) {
@@ -185,7 +201,7 @@ steal(
 	                            : '<span datetime="'+timestamp+'" data-owner="'+DocModel.owner+'" data-location="'+DocModel.owner+'">'+_char+'</span>';
 	                            
 	                    }
-	                }
+		            }
 	                o.node.innerHTML = strhtml;
 	            },
 				
