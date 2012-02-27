@@ -3,30 +3,44 @@
 	<head>
 		<title>Preview Print Document</title>
         <style type='text/css'>
-            body { font-family:Lucida Sans,Lucida Grande,Arial,sans-serif; padding: 10px; background-color: #FFFFFF; }
+            body {
+				background-color: #FFFFFF;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-size: 10px;
+				line-height: 15px;
+			}
             #output { 
-            	font-family: Arial, Helvetica;
+            	position: absolute;
+            	top: 0;
+            	left: 0;
+            	padding: 30px 25px 25px 25px;
+            	margin: 0;	
             	width: 700px;
-				height: 1000px;
-				border:1px solid black;
-				text-align: left;
-				padding: 15px 10px;
-				margin: 0;
-				font-size: 12px;
-				line-height: 17px;
-				padding: 30px 10px 20px 10px;
-            	zoom: 50%;
+				height: 1000px;			
+            	/*zoom: 50%;*/
+            }
+            canvas {
+            	position: absolute;
+            	top: 0;
+            	left: 0; 
+            	width: 700px;
+				height: 1000px;	           	
             }
         </style>
 	</head>
 	<body>
-		<div id='output'></div>
+		<div id="output"></div>
+		<input type="button" id="print" value="print" />
 		<script type='text/javascript' 
                 src='../../steal/steal.js'>
         </script>
 		<script type='text/javascript'>
 			steal('application/output',function(){
-				$('#output').ui_output();
+				$('#output').application_output();
+				$('#print').click(function() {
+					window.print();
+					return false;
+				});
 			})
 		</script>
 	</body>

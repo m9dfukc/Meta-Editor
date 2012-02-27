@@ -32,8 +32,8 @@ steal(
 		fileItem.addItem("Print", function(e) {
 		    var currentWindow = Titanium.UI.getCurrentWindow();  
 		    var newWindow = currentWindow.createWindow('app://application/output/output.html');  
-		    newWindow.setWidth(415);  
-		    newWindow.setHeight(620);
+		    newWindow.setWidth(770);  
+		    newWindow.setHeight(500);
 		    newWindow.open();  
 		    newWindow.focus();
 		});
