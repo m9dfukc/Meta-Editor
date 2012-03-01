@@ -25,8 +25,15 @@ steal(
 		$('#metainformation').widgets_metainformation();
 		$('#metainformation').widgets_metainformation().trigger('show');
 		
-		$('#test').mouseup(function() {
-            //reportSelectionHtml();
-        });
+		
+	    $(window).click(function() {
+	        generateMenu();
+	    }).focus(function() {
+	        generateMenu();
+	    });
+		
+		Titanium.API.addEventListener( Titanium.EXIT, function(event) {
+			if (!confirm("Do you really want to quit the application?")) event.stopPropagation();
+		});
 	}
 )

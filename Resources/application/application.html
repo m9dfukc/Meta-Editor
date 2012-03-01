@@ -3,16 +3,57 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Meta Editor</title>
+		<style type="text/css">
+			body {
+				font-family:Lucida Sans,Lucida Grande,Arial,sans-serif;
+				margin:20px;
+				line-height:20px;
+				background-color: #FAFAFA;
+			}
+			#logo {
+				text-align: right;
+				font-family:Lucida Sans,Lucida Grande,Arial,sans-serif;
+				font-size: 14px;
+				font-weight: bold;
+			}
+			.container {
+				font-family: sans-serif;
+				width: 700px;
+			}
+			
+			.tab {
+				padding-left: 20px;
+			}
+			.space {
+				padding-left: 5px;
+			}
+			#controls, #editor, #pages {
+				width: 100%;
+			}
+			
+			#editor {
+				height: 1000px;
+			}
+			
+			#metainformation {
+				position: absolute;
+				top: 140px;
+				left: 180px;
+				/*display: none;*/
+			}
+
+		</style>
 	</head>
 	<body>
 		<div class="container">
+			<div id="logo">
+				Grey Editor<sup style="font-size: 8px; font-style: italic; font-weight: normal;">beta</sup>
+			</div>
+			<br>
 	        <div id="controls">
 	            
 	        </div>
 	        <div id="editor">
-	        	
-	        </div>
-	        <div id="trash">
 	        	
 	        </div>
 		</div>
@@ -23,7 +64,7 @@
 	            src='../steal/steal.js?application'>   
 	    </script>
 	    <script type="text/javascript">
-    		Titanium.UI.getCurrentWindow().showInspector(true);
+    		//Titanium.UI.getCurrentWindow().showInspector(true);
 		</script>
 	</body>
 </html>

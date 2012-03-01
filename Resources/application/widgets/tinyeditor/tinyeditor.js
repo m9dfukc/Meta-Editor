@@ -3,7 +3,7 @@ steal(
 	'jquery/controller',
 	'jquery/view/ejs',
 	'application/scripts/tiny_mce/jquery.tinymce.js',
-	'application/scripts/jquery.create.js',
+	'application/scripts/goog.keycode.js',
 	'./tinyeditor.css'
 ).then( './views/init.ejs', function($){
 
@@ -34,10 +34,8 @@ steal(
 	                    $(ed.getDoc())
 	                    .bind('dragstart', function(l){
 	                        ed.dragStart = true;
-	                        console.log("dstart");
 	                    })
 	                    .bind('drop', function(l) {
-	                    	console.log("drop");
 	                        if (ed.dragStart === false) {
 	                            l.preventDefault();
 	                            l.stopPropagation();
@@ -50,18 +48,17 @@ steal(
 		                var sel = ed.selection;
 	                    var node = sel.getNode();
 	                    var code = [13,8,46];
-	                    
+            	              
 	                    l.isEvilKey = ($.inArray( l.keyCode, code) !== -1);
 	                    l.isSpace = (l.charCode == 32);
-	                    l.isChar = ((String.fromCharCode(l.keyCode)).search(/\w/) != -1) || l.isSpace;
-	                    
-	                    //console.log(l);
-	        
-	                    if (!sel.isCollapsed() && (l.isChar || l.isEvilKey || l.isSpace) && !(l.metaKey || l.ctrlKey) ) {
-	                        var nodes = $(sel.getContent());
-	                        $('#trash').append(nodes);
-	                    }
-	                    
+	                    l.isChar = 
+	                    	(goog_events_KeyCodes.isCharacterKey(l.keyCode) || 
+	                    	l.isSpace ||                	
+	                    	(String.fromCharCode(l.charCode)).search(/\w/) != -1 ||
+	                    	(String.fromCharCode(l.charCode)).search(/[a-zA-Z0-9äüöÄÜÖß@<>"§%&/\\=?\.\+\*\(\)\[\]\-\$\|\s\-]/) != -1) &&
+	                    	l.keyCode !== 13; 
+	                    	
+       
 	                    if (l.isChar && !l.metaKey && !l.ctrlKey) {  
 	                        l.preventDefault(); 
 	                        var el;
@@ -82,10 +79,10 @@ steal(
 		                        }, String.fromCharCode(l.charCode));
 	                        }	                            
 	                        if (node.nodeName == "SPAN") {
-	                            $(node).after(el);
-	                            sel.setNode(el);
+	                        	$(node).after(el);
+	                            sel.select(el);
 	                            sel.collapse(false);
-	                            Titanium.API.notice("cursor action in span node!");
+								Titanium.API.notice("cursor action in span node!");
 	                        } else {
 	                            sel.setNode(el);
 	                        }
@@ -96,7 +93,7 @@ steal(
 	                            var el = ed.dom.create('br');
 	                            if (node.nodeName == "SPAN") {
 	                                $(node).after(el);  
-	                                sel.setNode(el);
+	                                sel.select(el);
 	                            	sel.collapse(false);
 	                            	Titanium.API.notice("cursor action in span node!");
 	                            } else {
@@ -104,22 +101,42 @@ steal(
 	                            }
 	                            return false;
 	                        }
-						}     
+						}    
 	               	});
 	               	ed.onKeyDown.add(function(ed, l) { 
+	               		var sel = ed.selection;
+	                    var node = sel.getNode();
+	                    var code = [13,8,46];
+	                    
+	                    l.isEvilKey = ($.inArray( l.keyCode, code) !== -1);
+	                    l.isSpace = (l.charCode == 32);
+	                    l.isChar = 
+	                    	(goog_events_KeyCodes.isCharacterKey(l.keyCode) || 
+	                    	l.isSpace ||                	
+	                    	(String.fromCharCode(l.charCode)).search(/\w/) != -1 ||
+	                    	(String.fromCharCode(l.charCode)).search(/[a-zA-Z0-9äüöÄÜÖß@<>"§%&/\\=?\.\+\*\(\)\[\]\-\$\|\s\-]/) != -1) &&
+	                    	l.keyCode !== 13; 
+	                    
+	                    if (!sel.isCollapsed() && (l.isChar || l.isEvilKey || l.isSpace) && !(l.metaKey || l.ctrlKey) ) {
+	                        var nodes = $(sel.getContent());
+	                        // console.log(nodes);
+	                        $('#trash').append(nodes);
+	                    }
+	                    
 	                    if (l.keyCode == 9) {
 	                    	var sel = ed.selection;
 	                    	var node = sel.getNode();
 	                    	var timestamp = (new Date()).getTime();
 	                    	l.preventDefault();
-	                    	var _space ='<span datetime="'+timestamp+'" data-owner="'+DocModel.owner+'" data-location="'+DocModel.owner+'" class="space">&nbsp;</span>';
+	                    	var _space ='<span datetime="'+timestamp+'" data-owner="'+DocModel.owner+'" data-location="'+DocModel.owner+'" class="space">&nbsp;</span>';	                    	
 	                    	if (node.nodeName == "SPAN") {
-	                            $(node)
-	                            	.after(_space)
+	                            $(node).after(_space)
 	                            	.after(_space)
 	                            	.after(_space);
-	                            
-	                            sel.setNode(el);
+	                            var sel2 = ed.selection;
+	                            var node2 = sel2.getNode();
+	                            var el = $(node2).next().next().next();
+	                            sel.select(el);
 	                            sel.collapse(false);
 	                            Titanium.API.notice("cursor action in span node!");
 	                        } else {		
@@ -129,12 +146,29 @@ steal(
 							}
 							return false;
 						}
+						if (node.nodeName !== "SPAN") return;
+						
+						/* everything after here get only executed if in span node */
+						
+						return; // temporary
+						
+						if (node.nodeName == "SPAN") sel.select(node);
+						
+						if (l.keyCode == 8) { //backspace
+							// console.log("backspace bugfix needed!");
+                        }
+                        
+                        if (l.keyCode == 46) { //delete
+                        	// console.log("delete bugfix needed!");
+                        }
+                        
+                        if (l.keyCode >= 37 && l.keyCode <= 40 && node.nodeName == "SPAN") {
+                        	sel.select(node);
+                        	sel.collapse(false);
+                        } 
+              
 	               	});
-	               	
-	               	ed.onPaste.add(function(ed, e) {
-           				console.debug('Pasted plain text');
-      				});
-	            	   	
+ 	   	
 				},
 				
 				
@@ -186,20 +220,26 @@ steal(
 		            }  catch(e) {
 						var el = $("<div/>");
 					}
-		            console.log(el);
-					if ($(el).closest("span[datetime][data-owner]").length == 0) {
+					
+					var regex = /(<span datetime="[0-9]+?" data-owner=".*?" data-location=".*?")/g;
+					
+					var internal_paste = ($(el).closest("span[datetime][data-owner]").length > 0) || regex.test(strhtml);
+					
+					if (!internal_paste) {
 		            	var timestamp = (new Date()).getTime();
 	                    var strtxt = o.node.textContent;
 	                    strhtml = "";
 	                    for(i=0;i<strtxt.length;i++) {
 	                        var _char = strtxt.charAt(i);
 	                        var _regex = /\s/;
-	                        
-	                        strhtml += 
-	                        _regex.test(_char) 
-	                            ? '<span datetime="'+timestamp+'" data-owner="'+DocModel.owner+'" data-location="'+DocModel.owner+'" class="space">&nbsp;</span>' 
-	                            : '<span datetime="'+timestamp+'" data-owner="'+DocModel.owner+'" data-location="'+DocModel.owner+'">'+_char+'</span>';
-	                            
+	                        if (_char == "\n" || _char == "\r\n" || _char == "\r") {
+	                        	strhtml += "<br>";
+	                        } else {
+		                        strhtml += 
+		                        _regex.test(_char) 
+		                            ? '<span datetime="'+timestamp+'" data-owner="clipboard" data-location="" class="space">&nbsp;</span>' 
+		                            : '<span datetime="'+timestamp+'" data-owner="clipboard" data-location="">'+_char+'</span>';    
+	                       }  
 	                    }
 		            }
 	                o.node.innerHTML = strhtml;
@@ -208,18 +248,9 @@ steal(
 				save_onsavecallback: function() {
 					DocModel.save();
 					return false;
-				}
-			});
-			
-			$("#test").click(function() {
-				_this.options.page++;
-				_this.element.find('#textarea').append('<textarea name="page_'+_this.options.page+'" id="page_'+_this.options.page+'" page="'+_this.options.page+'" rows="15" cols="80" class="tinymce"></textarea>');
-				tinyMCE.execCommand('mceAddControl',false,'page_'+_this.options.page);
-				/*
-				tinyMCE.onAddEditor.add(function(mgr,ed) {
-					tinyMCE.execCommand('mceFocus',false,ed);
-				});
-				*/
+				},
+				
+				height : "100%"
 			});
 		}
 	})

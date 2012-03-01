@@ -12,7 +12,7 @@ steal(
 					Titanium.UI.Clipboard.setData('text/html', clip);
 					//var txt = $(clip).justtext();
 					//Titanium.UI.Clipboard.setText(txt);
-					console.log(clip);
+					// console.log(clip);
 		  		}
 			},
 			'copy' : function() {
@@ -21,8 +21,8 @@ steal(
 					Titanium.UI.Clipboard.setData('text/html', clip);
 					//var txt = $(clip).justtext();
 					//Titanium.UI.Clipboard.setText(txt);
-					//console.log(Titanium.UI.Clipboard.getText());
-					//console.log(clip);
+					//// console.log(Titanium.UI.Clipboard.getText());
+					//// console.log(clip);
 		  		}
 			},
 			'paste' : function() {
@@ -31,7 +31,7 @@ steal(
 				if (clip = Titanium.UI.Clipboard.getData('text/html')) {
 					Titanium.UI.Clipboard.setData('text/html', clip);
 					//Titanium.UI.Clipboard.setText(txt);
-					//console.log(clip);
+					//// console.log(clip);
 					//alert(txt);
 		  		} else {
 		  			var txt = Titanium.UI.Clipboard.getText();

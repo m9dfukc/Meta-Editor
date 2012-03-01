@@ -4,21 +4,21 @@
     <guid>ed8e0c0c-179c-4bf1-aeeb-e7ebe9c35a06</guid>
     <!-- These values are edited/maintained by Titanium Developer -->
     <id>de.m9dfukc.metaeditor</id>
-    <name>metaeditor</name>
+    <name>Grey Editor</name>
     <version>1.0</version>
-    <publisher>admin</publisher>
-    <url>http://</url>
+    <publisher>Julien Maire / m9dfukc</publisher>
+    <url>http://invertednothing.com</url>
     <description>not specified</description>
     <icon>default_app_logo.png</icon>
-    <copyright>2012 by admin</copyright>
+    <copyright>2012 by Julien Maire</copyright>
     <!-- Window Definition - these values can be edited -->
     <window>
         <id>initial</id>
-        <title>DeskTest</title>
+        <title>Krey Editor</title>
         <url>app://index.html</url>
-        <width>740</width>
-        <max-width>770</max-width>
-        <min-width>770</min-width>
+        <width>755</width>
+        <max-width>755</max-width>
+        <min-width>755</min-width>
         <height>650</height>
         <max-height>3000</max-height>
         <min-height>0</min-height>

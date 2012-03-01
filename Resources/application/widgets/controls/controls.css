@@ -1,7 +1,14 @@
 #last-opened {
   font-size: 10px;
   color: #666;
-  margin-left: 10px;
+  text-align: right;
+}
+#document-owner {
+  font-size: 10px;
+  color: #666;
+  position: absolute;
+  top: 0px;
+  cursor: pointer;
 }
 time {
   border-bottom: 1px dotted #333;

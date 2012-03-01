@@ -4,10 +4,17 @@ body {
 	line-height:20px;
 	background-color: #FAFAFA;
 }
+#logo {
+	text-align: right;
+	font-family:Lucida Sans,Lucida Grande,Arial,sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+}
 .container {
 	font-family: sans-serif;
 	width: 700px;
 }
+
 .tab {
 	padding-left: 20px;
 }
@@ -17,6 +24,11 @@ body {
 #controls, #editor, #pages {
 	width: 100%;
 }
+
+#editor {
+	height: 1000px;
+}
+
 #metainformation {
 	position: absolute;
 	top: 140px;

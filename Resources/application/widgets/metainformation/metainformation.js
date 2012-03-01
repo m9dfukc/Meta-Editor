@@ -1,7 +1,6 @@
 steal( 
 	'jquery/controller',
 	'jquery/view/ejs',
-	'application/scripts/jquery.colorbox.js',
 	'./metainformation.css'
 ).then('./views/init.ejs', function($){
 		
@@ -11,13 +10,16 @@ steal(
 		$.Controller('Widgets.Metainformation',
 		/** @Static */
 		{
-			defaults : {},
+			defaults : {
+				name : "unknown",
+				location : "unknown"
+			},
 			listensTo : ['show', 'hide']
 		},
 		/** @Prototype */
 		{
 			init : function(){
-				
+				var _this = this;
 				this.element.html("//application/widgets/metainformation/views/init.ejs",{
 					message: "Hello World"
 				}).hide();
@@ -26,33 +28,61 @@ steal(
 					var timestamp = (new Date()).getTime();
 					DocModel = new Model.Document('unknown', 'unknown', timestamp);
 				} 
+				$("#document-owner").click(function() {
+					_this.show();
+				})
+				this.element.find('input[name="meta-name"]').keypress(function(e) {
+					if (e.keyCode != 13 ) return;
+					_this.options.name = _this.element.find('input[name="meta-name"]').val();
+					if (_this.options.name != "") DocModel.setOwner(_this.options.name);
+					_this.showLocationInput();
+				});
+				this.element.find('input[name="meta-location"]').keypress(function(e) {
+					if (e.keyCode != 13 ) return;
+					_this.options.location = _this.element.find('input[name="meta-location"]').val();
+					if (_this.options.location != "") DocModel.setLocation(_this.options.location);
+					_this.hide();
+					$("#editor").fadeTo('fast', 1.0);
+				});
 			},
 			showNameInput : function() {
-				this.element.find('#meta-name').show()
-				this.element.find('#meta-location').hide();
+				$('#meta-name').show(0, function() {
+					$('#meta-name-value').focus();
+				});
+				$('#meta-location').hide();
+				$("#editor").fadeTo('fast', 0.15);
 			},
 			showLocationInput : function() {
-				this.element.find('#meta-name').hide()
-				this.element.find('#meta-location').show();
+				$('#meta-name').hide();
+				$('#meta-location').show(0, function() {
+					$('#meta-location-value').focus();
+				});
+				$("#editor").fadeTo('fast', 0.15);
 			},
 			"#meta-name-ok click" : function(el, ev){
-				var name = this.element.find('input[name="meta-name"]').val();
-				if (name != "") DocModel.setOwner(name);
+				this.options.name = this.element.find('input[name="meta-name"]').val();
+				if (this.options.name != "") DocModel.setOwner(this.options.name);
 				this.showLocationInput();
 			},
 			"#meta-location-ok click" : function(el, ev){
-				var location = this.element.find('input[name="meta-location"]').val();
-				if (location != "") DocModel.setLocation(location);
+				this.options.location = this.element.find('input[name="meta-location"]').val();
+				if (this.options.location != "") DocModel.setLocation(this.options.location);
 				this.hide();
+				$("#editor").fadeTo('fast', 1.0);
 			},
 			show : function(){
+				this.element.find('input[name="meta-name"]').focus();
 				this.element.show();
 				this.element.find(".meta").hide();
 				this.element.find("#meta-name").fadeIn("slow");
+				$("#editor").fadeTo('fast', 0.15);
 			},
 			hide : function(){
+				var text = this.options.name + " / " + this.options.location;
+				$("#document-owner span").html(text);
 				this.element.find(".meta").hide();
 				this.element.fadeOut("slow");
+				$("#editor").fadeTo('fast', 1.0);
 			}
 		})
 	}
